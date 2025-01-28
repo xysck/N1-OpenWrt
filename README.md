@@ -20,6 +20,7 @@
 1、修改.github/workflows目录下的YAML配置文件。<br>
 2、修改.config增减我需要的插件。<br>
 3、修改diy.sh相关插件源。<br>
+4、添加Samba自启动文件（20-smb）。<br>
 # 致谢
 代码使用LEAN大的[项目](https://github.com/coolsnowwolf/lede)<br>
 使用 flippy 的[脚本](https://github.com/unifreq/openwrt_packit)和 breakings 维护的[内核](https://github.com/breakings/OpenWrt/releases/tag/kernel_stable)打包成完整固件，感谢开发者们的无私分享。<br>
