@@ -76,7 +76,7 @@ case "$ACTION" in
 				echo -e "\toption dir_mask '0777'" >> $config_file
 				echo -e "\toption device '$device'" >> $config_file
 				echo -e "\toption inherit_owner 'yes'" >> $config_file
-				/etc/init.d/samba4 reload
+				/etc/init.d/samba reload
 				return
 			fi
 		fi
