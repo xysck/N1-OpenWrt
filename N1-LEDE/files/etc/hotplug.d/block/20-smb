@@ -87,11 +87,11 @@ case "$ACTION" in
 		i=0
 		while true
 		do
-			dev=`uci get samba4.@sambashare[$i].device`
+			dev=`uci get samba.@sambashare[$i].device`
 			[ $? -ne 0 ] && break
 
 			[ "$dev" = "$device" ] && {
-				auto=`uci get samba4.@sambashare[$i].auto`
+				auto=`uci get samba.@sambashare[$i].auto`
 				[ $auto = "1" ] && {
 					mount_dir=`uci get samba.@sambashare[$i].name`
 					uci delete samba.@sambashare[$i]
