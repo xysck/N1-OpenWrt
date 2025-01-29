@@ -93,10 +93,10 @@ case "$ACTION" in
 			[ "$dev" = "$device" ] && {
 				auto=`uci get samba4.@sambashare[$i].auto`
 				[ $auto = "1" ] && {
-					mount_dir=`uci get samba4.@sambashare[$i].name`
-					uci delete samba4.@sambashare[$i]
+					mount_dir=`uci get samba.@sambashare[$i].name`
+					uci delete samba.@sambashare[$i]
 					uci commit
-					/etc/init.d/samba4 reload
+					/etc/init.d/samba reload
 					return
 				}
 			}
