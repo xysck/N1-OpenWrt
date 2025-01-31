@@ -19,32 +19,36 @@ git clone -b 18.06 --single-branch --depth 1 https://github.com/jerrykuku/luci-t
 git clone -b 18.06 --single-branch --depth 1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 #git clone --depth=1 https://github.com/ophub/luci-app-amlogic package/amlogic
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go package/ddnsgo
-#git clone --depth=1 https://github.com/sirpdboy/NetSpeedTest package/NetSpeedTest
-
 git clone -b v5-lua --single-branch --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
 git clone -b lua --single-branch --depth 1 https://github.com/sbwml/luci-app-alist package/alist
 git clone --depth=1 https://github.com/gdy666/luci-app-lucky.git package/lucky
-#添加自定义的软件包源
+
+# 添加自定义的软件包源
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages ddns-go
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-ddns-go
+
 # Remove packages
-#删除lean库中的插件，使用自定义源中的包。
+# 删除lean库中的插件，使用自定义源中的包。
 rm -rf feeds/packages/net/v2ray-geodata
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/luci/applications/luci-app-argon-config
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/luci/applications/luci-app-mosdns
-#rm -rf feeds/luci/themes/luci-theme-design
-#rm -rf feeds/luci/applications/luci-app-design-config
 
-# Default IP
+# 修改默认IP、主机名、时区（修改config_generate文件）
 sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
+sed -i 's/OpenWrt/OPForN1/g' package/base-files/files/bin/config_generate
+sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 
-#修改默认时间格式
+# 修改默认时间格式
 sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
 
 # 调整 zerotier 到 服务 菜单
 sed -i '/"VPN"/d' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
+
+# 修改默认主题为argone
+sed -i 's/bootstrap/argone/g' ./feeds/luci/collections/luci/Makefile
+sed -i 's/bootstrap/argone/g' ./feeds/luci/collections/luci-ssl-nginx/Makefile
