@@ -45,10 +45,12 @@ sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
 
 # 调整 zerotier 到 服务 菜单
-sed -i '/"VPN"/d' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
+sed -i '/"VPN"/d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
 
 # 修改默认主题为argone
-sed -i 's/bootstrap/argone/g' ./feeds/luci/collections/luci/Makefile
-sed -i 's/bootstrap/argone/g' ./feeds/luci/collections/luci-ssl-nginx/Makefile
+sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci/Makefile
+sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-ssl-nginx/Makefile
+sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
+
