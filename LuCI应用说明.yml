@@ -1,4 +1,5 @@
-选择LuCI 配置 添加插件应用：常用
+选择LuCI 配置
+一、常用插件：
 -----------------------------------------------------------------------------------------
 LuCI ---> Applications ---> luci-app-accesscontrol  #访问时间控制
 LuCI ---> Applications ---> luci-app-adbyby-plus   #广告屏蔽大师Plus +
@@ -17,7 +18,6 @@ LuCI ---> Applications ---> luci-app-nlbwmon   #网络带宽监视器
 LuCI ---> Applications ---> luci-app-ramfree  #释放内存
 LuCI ---> Applications ---> luci-app-samba   #网络共享（Samba）
 LuCI ---> Applications ---> luci-app-sqm  #流量智能队列管理（QOS）
--------------------------------------------------------------------------------------------
 LuCI ---> Applications ---> luci-app-ssr-plus   #ssr低调上网Plus+
     luci-app-ssr-plus ---> Include shadowsocks v2ray Plugin  #SS v2ray插件   *
     luci-app-ssr-plus ---> Include v2ray  #v2ray代理
@@ -25,7 +25,6 @@ LuCI ---> Applications ---> luci-app-ssr-plus   #ssr低调上网Plus+
     luci-app-ssr-plus ---> Include red---socks2  #red---socks2代理   *
     luci-app-ssr-plus ---> Include Kcptun  #Kcptun加速
     luci-app-ssr-plus ---> Include ShadowsocksR Server  #ssr服务器
--------------------------------------------------------------------------------------------
 LuCI ---> Applications ---> luci-app-syncdial  #多拨虚拟网卡（原macvlan）
 LuCI ---> Applications ---> luci-app-unblockmusic  #解锁网易云灰色歌曲3合1新版本
 LuCI ---> Applications ---> luci-app-upnp   #通用即插即用UPnP（端口自动转发）
@@ -38,12 +37,8 @@ LuCI ---> Applications ---> luci-app-wrtbwmon  #实时流量监测
 LuCI ---> Applications ---> luci-app-xlnetacc  #迅雷快鸟
 LuCI ---> Applications ---> luci-app-zerotier  #ZeroTier内网穿透
 Extra packages  --->  ipv6helper  #支持 ipv6
-Utilities  --->  open-vm-tools  #打开适用于VMware的VM Tools
 
-
-
-以下是全部：                               注：应用后面标记 “ * ” 为最近新添加
------------------------------------------------------------------------------------------
+二、全部插件：（应用后面标记 “ * ” 为最近新添加）
 LuCI ---> Applications ---> luci-app-accesscontrol  #访问时间控制
 LuCI ---> Applications ---> luci-app-acme  #ACME自动化证书管理环境
 LuCI ---> Applications ---> luci-app-adblock   #ADB广告过滤
@@ -204,15 +199,9 @@ LuCI ---> Applications ---> luci-app-wrtbwmon  #实时流量监测
 LuCI ---> Applications ---> luci-app-xlnetacc  #迅雷快鸟
 LuCI ---> Applications ---> luci-app-zerotier  #ZeroTier内网穿透
 
----------------------------------------------------------------------------------------------------
-支持 iPv6：
-1、Extra packages  --->  ipv6helper  （选定这个后下面几项自动选择了）
+三、支持 iPv6：
+Extra packages  --->  ipv6helper  （选定这个后下面几项自动选择了）
 Network  --->  odhcp6c
 Network  --->  odhcpd-ipv6only
 LuCI  --->  Protocols  --->  luci-proto-ipv6
 LuCI  --->  Protocols  --->  luci-proto-ppp
-
-
-
-
-信息来源：https://www.right.com.cn/forum/thread-3682029-1-1.html
