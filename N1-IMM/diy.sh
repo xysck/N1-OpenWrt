@@ -35,10 +35,10 @@ rm -rf feeds/luci/applications/luci-app-argon-config
 #rm -rf feeds/luci/applications/luci-app-openvpn-server
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-openvpn-server
 
-# 调整 openvpn-server 到 VPN 菜单
-#sed -i 's/services/vpn/g' package/luci-app-openvpn-server/luasrc/controller/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-openvpn-server/luasrc/view/openvpn/*.htm
+# 调整 zerotier 到 服务 菜单
+sed -i '/"VPN"/d' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
 
 #替换luci-app-socat为https://github.com/chenmozhijin/luci-app-socat
 #rm -rf feeds/luci/applications/luci-app-socat
