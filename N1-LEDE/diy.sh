@@ -38,7 +38,7 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 
 # 修改默认IP、主机名、时区（修改config_generate文件）
 sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
-sed -i 's/OpenWrt/OPForN1/g' package/base-files/files/bin/config_generate
+sed -i 's/LEDE/OPForN1/g' package/base-files/files/bin/config_generate
 sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 
 # 修改默认时间格式
