@@ -11,52 +11,45 @@ function git_sparse_clone() {
 
 # Add packages
 #添加科学上网源
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall-packages
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/openwrt-passwall
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall-packages
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/openwrt-passwall
+git clone --depth=1 https://github.com/kenzok8/small package/small
+git clone --depth=1 https://github.com/kenzok8/openwrt-packages package/openwrt-packages
 git clone -b 18.06 --single-branch --depth 1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
 git clone -b 18.06 --single-branch --depth 1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
-git clone --depth=1 https://github.com/ophub/luci-app-amlogic package/amlogic
+#git clone --depth=1 https://github.com/ophub/luci-app-amlogic package/amlogic
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go package/ddnsgo
-git clone --depth=1 https://github.com/0x676e67/luci-theme-design package/luci-theme-design
-git clone --depth=1 https://github.com/0x676e67/luci-app-design-config package/luci-app-design-config
-git clone -b v3.35.0 --single-branch --depth 1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
+git clone -b v5-lua --single-branch --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
+git clone -b lua --single-branch --depth 1 https://github.com/sbwml/luci-app-alist package/alist
+git clone --depth=1 https://github.com/gdy666/luci-app-lucky.git package/lucky
 
-# iStore
-git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
-git_sparse_clone main https://github.com/linkease/istore luci
-
-#只能用3.35版本
-#git_sparse_clone master https://github.com/sbwml/luci-app-alist alist
-#git_sparse_clone v3.35.0 https://github.com/sbwml/luci-app-alist luci-app-alist
-
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages softethervpn5
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-softethervpn
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-openvpn-server
-#git_sparse_clone master https://github.com/kiddin9/openwrt-packages openvpn-dns-hotplug
-#git_sparse_clone master https://github.com/immortalwrt/packages net/samba4
-#git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-samba4
-#git_sparse_clone master https://github.com/immortalwrt/packages net/openvpn
-#git_sparse_clone master https://github.com/immortalwrt/packages net/openvpn-easy-rsa
-#git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-openvpn-server
+# 添加自定义的软件包源
+#git_sparse_clone main https://github.com/kiddin9/kwrt-packages ddns-go
+#git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-ddns-go
 
 # Remove packages
-#rm -rf package/small-package/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,natflow,wireless-regdb}
-#删除lean库中的插件，使用自定义源中的包。
+# 删除lean库中的插件，使用自定义源中的包。
 rm -rf feeds/packages/net/v2ray-geodata
 rm -rf feeds/luci/themes/luci-theme-argon
-rm -rf feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-argon-config
-rm -rf feeds/luci/applications/luci-app-design-config
-#删除默认的softethvpn
-#rm -rf feeds/packages/net/softethervpn5
-#rm -rf feeds/luci/applications/luci-app-softethervpn
-#删除默认的openvpn
-#rm -rf feeds/packages/net/openvpn
-#rm -rf feeds/packages/net/openvpn-easy-rsa
-#rm -rf feeds/luci/applications/luci-app-openvpn-server
-#删除默认的samba4
-#rm -rf feeds/packages/net/samba4
-#rm -rf feeds/luci/applications/luci-app-samba4 luci-app-samba4
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/packages/utils/v2dat
+rm -rf feeds/luci/applications/luci-app-mosdns
 
-# Default IP
-sed -i 's/192.168.1.1/192.168.2.2/g' package/base-files/files/bin/config_generate
+# 修改默认IP、主机名、时区（修改config_generate文件）
+sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
+sed -i 's/LEDE/OPForN1/g' package/base-files/files/bin/config_generate
+sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
+
+# 修改默认时间格式
+sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
+
+# 调整 zerotier 到 服务 菜单
+sed -i '/"VPN"/d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
+
+# 修改默认主题为argone
+sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci/Makefile
+sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-ssl-nginx/Makefile
+sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
