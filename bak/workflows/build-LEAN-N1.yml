@@ -168,9 +168,9 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-          基于lean openwrt构建
+          基于lean openwrt构建的斐讯N1固件
           首次使用建议全新刷写
-          * 基本信息
+          * 登录基本信息
           IP: 192.168.1.254
           账户: root
           密码: password
