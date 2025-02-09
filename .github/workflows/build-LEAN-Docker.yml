@@ -1,4 +1,4 @@
-name: Build OpenWRT-LEAN for N1
+name: Build OpenWRT-LEAN-Docker for N1
 
 on:
   workflow_dispatch:
