@@ -53,3 +53,6 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci/Makefile
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-ssl-nginx/Makefile
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
+
+# 添加防火墙自定义规则
+sed -i "$a echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> /etc/firewall.user" zzz-default-settings
