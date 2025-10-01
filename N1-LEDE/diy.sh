@@ -55,4 +55,4 @@ sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-ssl-nginx/Makefile
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
 
 # #添加旁路由的防火墙规则
-sed -i "\$i echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> /etc/firewall.user" ./package/lean/default-settings/files/zzz-default-settings
+sed -i "\$i echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> /etc/firewall.user\n\n" ./package/lean/default-settings/files/zzz-default-settings
