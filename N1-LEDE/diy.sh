@@ -10,7 +10,7 @@ function git_sparse_clone() {
 }
 
 # Add packages
-#添加科学上网源
+# 添加科学上网源
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall-packages
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/openwrt-passwall
 git clone --depth=1 https://github.com/kenzok8/small package/small
@@ -53,7 +53,3 @@ sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci/Makefile
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-ssl-nginx/Makefile
 sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
-
-#添加旁路由的防火墙规则
-sed -i '$a iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' /etc/firewall.user
-
