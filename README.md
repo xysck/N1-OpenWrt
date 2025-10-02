@@ -8,7 +8,7 @@
 5、ipv6完整支持！<br>
 6、为了拥有自己的定制固件，不停修改测试等待了N多个的编译周期，如果对你有帮助，欢迎fork！<br>
 7、集成晶晨宝盒，可直接在线升级openwrt版本，默认配置的是我的项目地址！<br>
-8、内核用5.15.148，很稳定，不建议升级。有部分用户反馈5.15.160以上的内核科学有问题！<br>
+8、内核是5.15.148，很稳定，不建议升级。有部分用户反馈5.15.160以上的内核科学有问题！<br>
 # 使用方法
 基于action方法网上一大把，基本流程如下：<br>
 1、fork我的项目。<br>
@@ -21,7 +21,7 @@
 2、修改.config增减需要的插件。<br>
 3、修改diy.sh相关插件源。<br>
 4、添加Samba自启动文件（20-smb、30-smb）。<br>
-5、集成本人自用的软件。<br>
+5、集成本人常用的软件。<br>
 # 致谢
 代码使用LEAN大的[项目](https://github.com/coolsnowwolf/lede)<br>
 使用 flippy 的[脚本](https://github.com/unifreq/openwrt_packit)和 breakings 维护的[内核](https://github.com/breakings/OpenWrt/releases/tag/kernel_stable)打包成完整固件，感谢开发者们的无私分享。<br>
