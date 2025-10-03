@@ -9,13 +9,10 @@ function git_sparse_clone() {
   cd .. && rm -rf $repodir
 }
 
-# Default IP
-sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
-
 # Add packages
 # 添加科学上网源
 git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
-git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
+#git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 #git clone --depth 1 https://github.com/ophub/luci-app-amlogic package/amlogic
 #git clone --depth 1 https://github.com/sirpdboy/luci-app-ddns-go package/ddnsgo
 git clone --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
@@ -43,3 +40,11 @@ sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/vie
 # 替换luci-app-socat为https://github.com/chenmozhijin/luci-app-socat
 #rm -rf feeds/luci/applications/luci-app-socat
 #git_sparse_clone main https://github.com/chenmozhijin/luci-app-socat luci-app-socat
+
+# 修改默认IP、主机名
+sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
+sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
+
+# 修改默认主题
+sed -i 's/luci-theme-design/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
