@@ -13,9 +13,9 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-23.05
-  CONFIG_FILE: N1-IMM/.config
-  DIY_SH: N1-IMM/diy.sh
-  FILES: N1-IMM/files
+  CONFIG_FILE: N1/.config
+  DIY_SH: N1/diy.sh
+  FILES: N1/files
   TZ: Asia/Shanghai
   GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
@@ -24,70 +24,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: 检查服务器配置
-      run: |
-        echo "警告?"
-        echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
-        echo "云编译建议取消勾选Node.js及其相关插件！"
-        echo "已知CPU型号（降序）：7763,8370C,8272CL,8171M,E5系列"
-        echo "--------------------------CPU信息--------------------------"
-        echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
-        echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
-        echo "--------------------------内存信息--------------------------"
-        echo "已安装内存详细信息："
-        sudo lshw -short -C memory | grep GiB
-        echo -e "\n"
-        echo "--------------------------硬盘信息--------------------------"
-        echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
-        echo "硬盘详情："
-        df -Th
-        
-    - name: 释放磁盘空间准备
-      run: |
-        echo "Before freeing up disk space"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
-
-    - name: "优化磁盘空间"
-      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
-      with:
-        operate_sudo: "True"
-        general_include: ".+"
-        general_exclude: |-
-          ^GCC$
-          ^G\+\+$
-          Clang
-          LLVM
-        docker_include: ".+"
-        docker_prune: "True"
-        docker_clean: "True"
-        apt_prune: "True"
-        apt_clean: "True"
-        homebrew_prune: "True"
-        homebrew_clean: "True"
-        npm_prune: "True"
-        npm_clean: "True"
-        os_swap: "True"
-
-    - name: 释放磁盘空间
-      uses: easimon/maximize-build-space@master
-      with: 
-        root-reserve-mb: 10240
-        swap-size-mb: 1
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-        remove-docker-images: 'true'
-
-    - name: 释放磁盘空间完成
-      run: |
-        echo "Free up disk space complete"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
-    
     - name: 准备完成
       uses: actions/checkout@main
 
@@ -124,7 +60,7 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        mixkey: N1-IMM-${{ env.REPO_BRANCH }}
+        mixkey: N1-${{ env.REPO_BRANCH }}
         prefix: ${{ github.workspace }}/openwrt
 
     - name: 更新及安装 feeds
@@ -174,7 +110,7 @@ jobs:
         SW_FLOWOFFLOAD: 1
         SFE_FLOW: 0
 
-    - name: 上传 OpenWrt固件到 Release
+    - name: 上传 OpenWrt 固件到 Release
       uses: ncipollo/release-action@main
       if: ${{ env.PACKAGED_STATUS == 'success' }} && !cancelled()
       with:
@@ -204,4 +140,3 @@ jobs:
       with:
         keep_latest: 10
         delete_tags : true
-        
