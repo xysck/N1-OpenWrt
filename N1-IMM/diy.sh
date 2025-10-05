@@ -17,7 +17,7 @@ function git_sparse_clone() {
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-pushbot
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
 
-git_sparse_clone master https://github.com/kiddin9/kwrt-packages/tree/main luci-app-adguardhome
+git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-adguardhome.git
 #git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-aliddns
 #git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-amlogic
 #git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-filetransfer
