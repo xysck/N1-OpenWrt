@@ -16,6 +16,12 @@ function git_sparse_clone() {
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-aliddns
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-pushbot
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-turboacc
+git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-adguardhome
+git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-aliddns
+git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-amlogic
+git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-ssr-plus
+git_sparse_clone master https://github.com/kiddin9/kwrt-packages luci-app-store
 
 # 加入OpenClash核心
 #chmod -R a+x $GITHUB_WORKSPACE/preset-clash-core.sh
