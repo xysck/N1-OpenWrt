@@ -15,6 +15,9 @@ function git_sparse_clone() {
 #git clone --depth=1 https://github.com/ophub/luci-app-amlogic package/amlogic
 #git_sparse_clone master https://github.com/kiddin9/openwrt-packages luci-app-aliddns
 
+git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
+git clone --depth=1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
+
 # 加入OpenClash核心
 #chmod -R a+x $GITHUB_WORKSPACE/preset-clash-core.sh
 #$GITHUB_WORKSPACE/N1/preset-clash-core.sh
