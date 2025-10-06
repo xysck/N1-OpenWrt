@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Check machine configuration
+    - name: 检查服务器配置
       run: |
         echo "警告⚠"
         echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
@@ -34,14 +34,14 @@ jobs:
         echo "硬盘详情："
         df -Th
         
-    - name: Before freeing up disk space
+    - name: 释放磁盘空间准备
       run: |
         echo "Before freeing up disk space"
         echo "=============================================================================="
         df -hT
         echo "=============================================================================="
 
-    - name: "Optimize Disk Space"
+    - name: "优化磁盘空间"
       uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
       with:
         operate_sudo: "True"
@@ -62,7 +62,7 @@ jobs:
         npm_clean: "True"
         os_swap: "True"
 
-    - name: Freeing up disk space
+    - name: 释放磁盘空间
       uses: easimon/maximize-build-space@master
       with: 
         root-reserve-mb: 10240
@@ -73,17 +73,17 @@ jobs:
         remove-codeql: 'true'
         remove-docker-images: 'true'
 
-    - name: Free up disk space complete
+    - name: 释放磁盘空间完成
       run: |
         echo "Free up disk space complete"
         echo "=============================================================================="
         df -hT
         echo "=============================================================================="
         
-    - name: Checkout
+    - name: 校验
       uses: actions/checkout@main
       
-    - name: Initialize environment
+    - name: 初始化编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -99,27 +99,27 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo chown $USER:$GROUPS $GITHUB_WORKSPACE
 
-    - name: Clone source code
+    - name: 克隆源码
       working-directory: ./
       run: |
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         sed -i 's|https://github.com/coolsnowwolf/luci.git;openwrt-23.05|https://github.com/coolsnowwolf/luci|g' feeds.conf.default
 
-    - name: cache wrt build
+    - name: 缓存构建动作
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
         mixkey: amlogic-${{ env.REPO_BRANCH }}
         prefix: ${{ github.workspace }}/openwrt
         
-    - name: Update & Install feeds
+    - name: 更新及安装 feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Load custom config
+    - name: 加载自定义配置
       run: |
         [ -e $FILES ] && mv $FILES openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
@@ -127,11 +127,11 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH
 
-    # - name: SSH connect to Actions
+    # - name: SSH 连接到 Actions
       # uses: P3TERX/ssh2actions@main
       # if: (github.event.inputs.ssh == 'true') || contains(github.event.action, 'ssh')
 
-    - name: Download package
+    - name: 下载软件包
       working-directory: ./openwrt
       run: |
         make defconfig
@@ -139,7 +139,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
-    - name: Compile the firmware
+    - name: 编译固件
       run: |
         chmod -R 755 openwrt
         cd openwrt
@@ -147,7 +147,7 @@ jobs:
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "compile_status=success" >> $GITHUB_ENV
 
-    - name: Package OpenWrt Firmware
+    - name: 打包 OpenWrt 固件
       if: ${{ env.compile_status }} == 'success' && !cancelled()
       uses: unifreq/openwrt_packit@master
       env:
@@ -160,7 +160,7 @@ jobs:
         SW_FLOWOFFLOAD: 1
         SFE_FLOW: 0
        
-    - name: Upload OpenWrt Firmware to Release
+    - name: 上传 OpenWrt 固件到 Release
       uses: ncipollo/release-action@main
       if: ${{ env.PACKAGED_STATUS == 'success' }} && !cancelled()
       with:
@@ -176,7 +176,7 @@ jobs:
           账户: root
           密码: password
           
-    - name: Delete old releases
+    - name: 删除发布的旧固件
       uses: dev-drprasad/delete-older-releases@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
