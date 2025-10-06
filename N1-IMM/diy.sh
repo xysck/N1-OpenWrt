@@ -16,7 +16,7 @@ function git_sparse_clone() {
 # Add packages
 # 添加自定义的软件包源
 #git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-#git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git clone -b v5-lua --single-branch --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-adguardhome
 git clone --depth=1 https://github.com/ophub/luci-app-amlogic package/amlogic
@@ -24,7 +24,6 @@ git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mo
 git clone --depth=1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
 git clone --depth=1 https://github.com/DustReliant/luci-app-filetransfer package/luci-app-filetransfer
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-fileassistant
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-turboacc
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages ddns-go
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-ddns-go
 
