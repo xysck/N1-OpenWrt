@@ -14,7 +14,7 @@ function git_sparse_clone() {
 }
 
 # Add packages
-# 添加自定的软件包源
+# 添加自定义的软件包源
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-adguardhome
