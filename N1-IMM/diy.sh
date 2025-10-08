@@ -30,10 +30,6 @@ git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-fileassi
 # 添加自定的科学上网源
 git clone --depth=1 https://github.com/fw876/helloworld package/helloworld
 
-# 加入OpenClash核心
-#chmod -R a+x $GITHUB_WORKSPACE/preset-clash-core.sh
-#$GITHUB_WORKSPACE/N1/preset-clash-core.sh
-
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
 
