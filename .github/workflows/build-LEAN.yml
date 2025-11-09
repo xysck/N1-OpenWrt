@@ -177,7 +177,8 @@ jobs:
           密码: password
           * 使用方法
           首次使用建议全新刷写。
-          安装固件：先写入U盘用并插入U盘启动后，再输入命令openwrt-install-amlogic，按照英文提示写入到emmc。或在路由器TTYD终端使用install-to-emmc.sh命令全新刷入emmc。
+          安装固件：先写入U盘用并插入U盘启动后，再输入命令openwrt-install-amlogic，按照英文提示写入到emmc。
+          或在路由器TTYD终端使用install-to-emmc.sh命令全新刷入emmc。
           更新固件：将固件放在/mnt/mmcblk2p4/目录下，在路由器TTYD终端输入openwrt-update-amlogic命令可直接更新。
         
     - name: 删除发布的旧固件
