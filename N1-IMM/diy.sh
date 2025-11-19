@@ -42,3 +42,12 @@ sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
 
 # 调整 zerotier 到 服务 菜单
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+
+# 添加 OpenClash Meta 内核
+mkdir -p files/etc/openclash/core
+wget -qO "clash_meta.tar.gz" "https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
+tar -zxvf "clash_meta.tar.gz" -C files/etc/openclash/core/
+mv files/etc/openclash/core/clash files/etc/openclash/core/clash_meta
+chmod +x files/etc/openclash/core/clash_meta
+rm -f "clash_meta.tar.gz"
+
