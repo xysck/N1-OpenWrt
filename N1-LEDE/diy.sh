@@ -54,3 +54,11 @@ sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
 
 # #添加旁路由的防火墙规则
 sed -i "\$i echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> /etc/firewall.user\n" ./package/lean/default-settings/files/zzz-default-settings
+
+# 添加 OpenClash Meta 内核
+mkdir -p files/etc/openclash/core
+wget -qO "clash_meta.tar.gz" "https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
+tar -zxvf "clash_meta.tar.gz" -C files/etc/openclash/core/
+mv files/etc/openclash/core/clash files/etc/openclash/core/clash_meta
+chmod +x files/etc/openclash/core/clash_meta
+rm -f "clash_meta.tar.gz"
