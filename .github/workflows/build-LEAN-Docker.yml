@@ -6,7 +6,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: N1-LEDE/.config
+  CONFIG_FILE: N1-LEDE/docker.config
   DIY_SH: N1-LEDE/diy.sh
   FILES: N1-LEDE/files
   TZ: Asia/Shanghai
@@ -168,7 +168,7 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-      基于Lean openwrt构建的斐讯N1固件（带Docker）
+          基于lean openwrt构建的斐讯N1固件（带Docker）
       
           * 登录信息
           IP: 192.168.2.254
