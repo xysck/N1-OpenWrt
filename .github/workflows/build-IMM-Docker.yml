@@ -1,0 +1,139 @@
+name: Build ImmortalWrt for N1
+
+on:
+  workflow_dispatch:
+   inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+#  schedule:
+#    - cron: "0 0 1,16 * *"
+
+env:
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: openwrt-23.05
+  CONFIG_FILE: N1-IMM/docker.config
+  DIY_SH: N1-IMM/diy.sh
+  FILES: N1-IMM/files
+  TZ: Asia/Shanghai
+  GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: 准备完成
+      uses: actions/checkout@main
+
+    - name: 释放磁盘空间
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: false
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+
+    - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt-get -qq update -y
+        sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/nantayo/My-Pkg/master/2305)
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+
+    - name: 克隆源码
+      working-directory: /workdir
+      run: |
+        git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: 缓存构建动作
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: N1-${{ env.REPO_BRANCH }}
+        prefix: ${{ github.workspace }}/openwrt
+
+    - name: 更新及安装 feeds
+      working-directory: ./openwrt
+      run: |
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+
+    - name: 加载自定义配置
+      run: |
+        [ -e $FILES ] && mv $FILES openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_SH
+
+    - name: SSH 连接到 Actions
+      uses: P3TERX/ssh2actions@main
+      if: (github.event.inputs.ssh == 'true') || contains(github.event.action, 'ssh')
+
+    - name: 下载软件包
+      working-directory: ./openwrt
+      run: |
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: 编译固件
+      run: |
+        chmod -R 755 openwrt
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        echo "compile_status=success" >> $GITHUB_ENV
+
+    - name: 打包镜像文件
+      if: ${{ env.compile_status }} == 'success' && !cancelled()
+      uses: unifreq/openwrt_packit@master
+      env:
+        OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*.tar.gz
+        KERNEL_REPO_URL: https://github.com/breakings/OpenWrt/releases/tag/kernel_stable
+        KERNEL_VERSION_NAME: 5.15.148
+        KERNEL_AUTO_LATEST: false
+        PACKAGE_SOC: s905d
+        WHOAMI: keko
+        SW_FLOWOFFLOAD: 1
+        SFE_FLOW: 0
+
+    - name: 上传 OpenWrt 固件到 Release
+      uses: ncipollo/release-action@main
+      if: ${{ env.PACKAGED_STATUS == 'success' }} && !cancelled()
+      with:
+        tag: immortalwrt_N1_${{ env.PACKAGED_OUTPUTDATE }}
+        artifacts: /opt/openwrt_packit/output/*
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          基于immortalwrt openwrt构建的斐讯N1固件（带Docker）
+          * 登录信息
+          IP: 192.168.1.254
+          账户: root
+          密码: password
+          * 使用方法
+          首次使用建议全新刷写。
+          安装固件：先写入U盘用并插入U盘启动后，再输入命令openwrt-install-amlogic，按照英文提示写入到emmc。
+          或在路由器TTYD终端使用install-to-emmc.sh命令全新刷入emmc。
+          更新固件：将固件放在/mnt/mmcblk2p4/目录下，在路由器TTYD终端输入openwrt-update-amlogic命令可直接更新。
+
+    - name: 删除发布的旧固件
+      uses: dev-drprasad/delete-older-releases@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        keep_latest: 10
+        delete_tags : true
