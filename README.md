@@ -25,7 +25,7 @@
 # 个性化修改
 1、修改.github/workflows目录下的YAML配置文件。<br>
 2、修改.config增减需要的插件。<br>
-3、修改diy.sh相关插件源。<br>
+3、修改diy.sh相关插件源及个性化修改。<br>
 4、添加Samba自启动文件（20-smb、30-smb）。<br>
 5、集成你需要的软件。<br>
 # 致谢
