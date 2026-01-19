@@ -34,10 +34,20 @@ rm -rf feeds/packages/net/mosdns
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/luci/applications/luci-app-mosdns
 
-# 修改默认IP、主机名、时区（修改config_generate文件）
+# 修改默认IP
 sed -i 's/192.168.1.1/192.168.2.254/g' package/base-files/files/bin/config_generate
+
+# 修改默认主机名
 sed -i 's/LEDE/OPForN1/g' package/base-files/files/bin/config_generate
+
+# 修改默认时区
 sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
+
+# coremark跑分定时清除
+sed -i '/\* \* \* \/etc\/coremark.sh/d' feeds/packages/utils/coremark/*
+
+# 修改插件名字
+sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 
 # 修改默认时间格式
 sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
