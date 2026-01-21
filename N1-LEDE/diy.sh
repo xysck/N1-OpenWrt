@@ -35,9 +35,9 @@ rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/luci/applications/luci-app-mosdns
 
 # 修改默认IP、默认主机名、默认时区
-sed -i 's/192.168.1.1/192.168.2.254/g' ./package/base-files/files/bin/config_generate
-sed -i 's/LEDE/OPForN1/g' ./package/base-files/files/bin/config_generate
-sed -i 's/UTC/Asia\/Shanghai/g' ./package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.254/g' package/base-files/files/bin/config_generate
+sed -i 's/LEDE/OPForN1/g' package/base-files/files/bin/config_generate
+sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 
 # coremark跑分定时清除
 sed -i '/\* \* \* \/etc\/coremark.sh/d' feeds/packages/utils/coremark/*
