@@ -31,7 +31,7 @@ git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-fileassi
 git clone --depth=1 https://github.com/fw876/helloworld package/helloworld
 
 # 修改默认IP
-sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.254/g' package/base-files/files/bin/config_generate
 
 # 修改默认主题
 sed -i 's/luci-theme-design/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
