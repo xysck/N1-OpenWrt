@@ -96,10 +96,10 @@ jobs:
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install time
         sudo -E apt-get -qq install gn
-        # sudo -E apt-get -qq daemon-reload
+        sudo -E systemctl daemon-reload
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
-        sudo chown $USER:$GROUPS $GITHUB_WORKSPACE 
+        sudo chown $USER:$GROUPS $GITHUB_WORKSPACE
 
     - name: 克隆源码
       working-directory: ./
