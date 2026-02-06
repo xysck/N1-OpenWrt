@@ -166,7 +166,7 @@ jobs:
        
     - name: 上传 OpenWrt 固件到 Release
       uses: ncipollo/release-action@main
-      if: ${{ env.compile_status == 'success' && github.action_status != 'cancelled' }}
+      if: ${{ env.PACKAGED_STATUS == 'success' && github.action_status != 'cancelled' }}
       with:
         tag: OpenWrt_N1_${{ env.PACKAGED_OUTPUTDATE }}
         artifacts: /opt/openwrt_packit/output/*
