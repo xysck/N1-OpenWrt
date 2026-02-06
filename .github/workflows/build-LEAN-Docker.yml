@@ -150,7 +150,7 @@ jobs:
         echo "compile_status=success" >> $GITHUB_ENV
 
     - name: 打包 OpenWrt 固件
-      if: ${{ env.compile_status }} == 'success' && !cancelled()
+      if: ${{ env.compile_status == 'success' && github.action_status != 'cancelled' }}
       uses: unifreq/openwrt_packit@master
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/openwrt-amlogic-mesongx-phicomm_n1-rootfs.tar.gz
@@ -166,7 +166,7 @@ jobs:
        
     - name: 上传 OpenWrt 固件到 Release
       uses: ncipollo/release-action@main
-      if: ${{ env.PACKAGED_STATUS == 'success' }} && !cancelled()
+      if: ${{ env.PACKAGED_STATUS == 'success' && github.action_status != 'cancelled' }}
       with:
         tag: OpenWrt_N1_${{ env.PACKAGED_OUTPUTDATE }}
         artifacts: /opt/openwrt_packit/output/*
