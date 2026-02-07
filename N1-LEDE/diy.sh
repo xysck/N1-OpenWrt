@@ -40,7 +40,9 @@ sed -i 's/LEDE/OPForN1/g' package/base-files/files/bin/config_generate
 sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 
 sed -i '3a\	set system.@system[0].hostname=\'OPForN1\'' package/lean/default-settings/files/zzz-default-settings
-sed -i '7a\	set network.lan.ipaddr=\'192.168.2.254\'' package/lean/default-settings/files/zzz-default-settings
+sed -i '5a\	set network.lan.ipaddr=\'192.168.2.254\'' package/lean/default-settings/files/zzz-default-settings
+sed -i '6a\ set network.lan.netmask=\'255.255.255.0\'' package/lean/default-settings/files/zzz-default-settings
+sed -i '7a\	set network.lan.gateway=\'192.168.2.1\'' package/lean/default-settings/files/zzz-default-settings
 
 # coremark跑分定时清除
 sed -i '/\* \* \* \/etc\/coremark.sh/d' feeds/packages/utils/coremark/*
