@@ -47,9 +47,6 @@ sed -i '7a\	set network.lan.gateway=\'192.168.2.1\'' package/lean/default-settin
 # coremark跑分定时清除
 sed -i '/\* \* \* \/etc\/coremark.sh/d' feeds/packages/utils/coremark/*
 
-# 修改默认时间格式
-sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' package/lean/autocore/files/*/index.htm
-
 # 调整 zerotier 到 服务 菜单
 sed -i '/"VPN"/d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
