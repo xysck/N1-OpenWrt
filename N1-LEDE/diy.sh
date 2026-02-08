@@ -61,7 +61,7 @@ sed -i 's/bootstrap/argone/g' feeds/luci/collections/luci-nginx/Makefile
 sed -i '\$i echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> /etc/firewall.user\n' ./package/lean/default-settings/files/zzz-default-settings
 
 # 修改默认时间格式
-sed -i "s/os.date()/os.date('%Y-%m-%d %H:%M:%S %A')/g" package/lean/autocore/files/*/index.htm
+sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
 
 # 添加 OpenClash Meta 内核
 mkdir -p files/etc/openclash/core
