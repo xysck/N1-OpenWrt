@@ -35,22 +35,22 @@ rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/luci/applications/luci-app-mosdns
 
 # 修改默认IP、默认主机名、默认时区
-sed -i 's/192.168.1.1/192.168.2.254/g' package/base-files/files/bin/config_generate
-sed -i 's/LEDE/OPForN1/g' package/base-files/files/bin/config_generate
-sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
+sed -i "s/192.168.1.1/192.168.2.254/g" package/base-files/files/bin/config_generate
+sed -i "s/LEDE/OPForN1/g" package/base-files/files/bin/config_generate
+sed -i "s/UTC/Asia\/Shanghai/g" package/base-files/files/bin/config_generate
 
-sed -i '3a\	set system.@system[0].hostname=\'OPForN1\'' package/lean/default-settings/files/zzz-default-settings
-sed -i '5a\	set network.lan.ipaddr=\'192.168.2.254\'' package/lean/default-settings/files/zzz-default-settings
-sed -i '6a\ set network.lan.netmask=\'255.255.255.0\'' package/lean/default-settings/files/zzz-default-settings
-sed -i '7a\	set network.lan.gateway=\'192.168.2.1\'' package/lean/default-settings/files/zzz-default-settings
+sed -i "3a\	set system.@system[0].hostname=\"OPForN1\"" package/lean/default-settings/files/zzz-default-settings
+sed -i "5a\	set network.lan.ipaddr=\"192.168.2.254\"" package/lean/default-settings/files/zzz-default-settings
+sed -i "6a\ set network.lan.netmask=\"255.255.255.0\"" package/lean/default-settings/files/zzz-default-settings
+sed -i "7a\	set network.lan.gateway=\"192.168.2.1\"" package/lean/default-settings/files/zzz-default-settings
 
 # coremark跑分定时清除
-sed -i '/\* \* \* \/etc\/coremark.sh/d' feeds/packages/utils/coremark/*
+sed -i "/\* \* \* \/etc\/coremark.sh/d" feeds/packages/utils/coremark/*
 
 # 调整 zerotier 到 服务 菜单
-sed -i '/"VPN"/d' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
-sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
+sed -i "/"VPN"/d" feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i "s/vpn/services/g" feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i "s/vpn/services/g" feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/zerotier_status.htm
 
 # 修改默认主题为argone
 sed -i "s/bootstrap/argone/g" feeds/luci/collections/luci/Makefile
