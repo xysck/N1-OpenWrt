@@ -70,4 +70,3 @@ tar -zxvf "clash_meta.tar.gz" -C files/etc/openclash/core/
 mv files/etc/openclash/core/clash files/etc/openclash/core/clash_meta
 chmod +x files/etc/openclash/core/clash_meta
 rm -f "clash_meta.tar.gz"
-
