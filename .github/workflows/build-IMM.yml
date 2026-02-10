@@ -123,7 +123,7 @@ jobs:
         body: |
           基于immortalwrt openwrt构建的斐讯N1固件
           * 登录信息
-          IP: 192.168.1.254
+          IP: 192.168.2.254
           账户: root
           密码: password
           * 使用方法
