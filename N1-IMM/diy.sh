@@ -31,7 +31,7 @@ git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-fileassi
 git clone --depth=1 https://github.com/fw876/helloworld package/helloworld
 
 # 修改默认IP、默认主机名、默认时区
-sed -i 's/192.168.1.1/192.168.1.254/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.254/g' package/base-files/files/bin/config_generate
 sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
 sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/bin/config_generate
 
