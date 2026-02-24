@@ -5,7 +5,6 @@ on:
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
-  # REPO_URL: https://github.com/xysck/lede
   REPO_BRANCH: master
   CONFIG_FILE: N1-LEDE/.config
   DIY_SH: N1-LEDE/diy.sh
