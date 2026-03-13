@@ -26,9 +26,6 @@ git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-fil
 #git_sparse_clone master https://github.com/kenzok8/openwrt-packages ddns-go
 #git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-ddns-go
 
-# 添加自定的科学上网源
-git clone --depth=1 https://github.com/fw876/helloworld package/helloworld
-
 # 修改默认IP、默认主机名、默认时区
 sed -i 's/192.168.1.1/192.168.2.254/g' package/base-files/files/bin/config_generate
 sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
