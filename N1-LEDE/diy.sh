@@ -23,7 +23,8 @@ git clone --depth=1 https://github.com/gdy666/luci-app-lucky.git package/lucky
 # 添加科学上网源
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall-packages
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/openwrt-passwall
-git clone --depth=1 https://github.com/kenzok8/small package/small
+#git clone --depth=1 https://github.com/kenzok8/small package/small
+git clone --depth=1 https://github.com/vernesong/OpenClash package/luci-app-openclash
 
 # Remove packages
 # 删除lean库中的插件，使用自定义源中的包。
