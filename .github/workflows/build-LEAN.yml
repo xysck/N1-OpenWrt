@@ -40,11 +40,10 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
+        sudo chown $USER:$GROUPS $GITHUB_WORKSPACE
 
     - name: 克隆源码
-      working-directory: /workdir
+      working-directory: ./
       run: |
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
@@ -70,6 +69,8 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH
+
+ 
 
     - name: 下载软件包
       working-directory: ./openwrt
@@ -112,6 +113,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           基于lean openwrt构建的斐讯N1固件
+      
           * 登录信息
           IP: 192.168.2.254
           账户: root
