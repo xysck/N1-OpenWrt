@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: 检查出代码
+    - name: 检出代码
       uses: actions/checkout@main
 
     - name: 释放磁盘空间
