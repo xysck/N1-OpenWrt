@@ -55,7 +55,7 @@ jobs:
         cd openwrt
         sed -i 's|https://github.com/coolsnowwolf/luci.git;openwrt-23.05|https://github.com/coolsnowwolf/luci|g' feeds.conf.default
 
-    - name: 缓缓存构建
+    - name: 缓存构建
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
