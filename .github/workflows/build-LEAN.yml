@@ -10,14 +10,13 @@ env:
   DIY_SH: N1-LEDE/diy.sh
   FILES: N1-LEDE/files
   TZ: Asia/Shanghai
-  GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
 jobs:
   build:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: 准备完成
+    - name: 检查出代码
       uses: actions/checkout@main
 
     - name: 释放磁盘空间
@@ -31,12 +30,19 @@ jobs:
         docker-images: true
         swap-storage: true
 
-    - name: 初始化编译环境
+    - name: 搭建构建环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo -E apt-get -qq update -y
-        sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/nantayo/My-Pkg/master/2410)
+        #sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/nantayo/My-Pkg/master/2410)
+        sudo -E apt-get -qq install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
+          bzip2 ccache clang cmake cpio curl device-tree-compiler flex gawk gcc-multilib g++-multilib gettext \
+          genisoimage git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev \
+          libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev \
+          libreadline-dev libssl-dev libtool llvm lrzsz libnsl-dev ninja-build p7zip p7zip-full patch pkgconf \
+          python3 python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion \
+          swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -49,13 +55,13 @@ jobs:
         cd openwrt
         sed -i 's|https://github.com/coolsnowwolf/luci.git;openwrt-23.05|https://github.com/coolsnowwolf/luci|g' feeds.conf.default
 
-    - name: 缓存构建动作
+    - name: 缓缓存构建
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
         mixkey: amlogic-${{ env.REPO_BRANCH }}
         prefix: ${{ github.workspace }}/openwrt
-        
+
     - name: 更新及安装 feeds
       working-directory: ./openwrt
       run: |
@@ -69,8 +75,6 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH
-
- 
 
     - name: 下载软件包
       working-directory: ./openwrt
@@ -102,7 +106,7 @@ jobs:
         WHOAMI: keko
         SW_FLOWOFFLOAD: 1
         SFE_FLOW: 0
-       
+
     - name: 上传 OpenWrt 固件到 Release
       uses: ncipollo/release-action@main
       if: ${{ env.PACKAGED_STATUS == 'success' && github.action_status != 'cancelled' }}
@@ -113,7 +117,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           基于lean openwrt构建的斐讯N1固件
-      
           * 登录信息
           IP: 192.168.2.254
           账户: root
@@ -123,7 +126,7 @@ jobs:
           安装固件：先写入U盘用并插入U盘启动后，再输入命令openwrt-install-amlogic，按照英文提示写入到emmc。
           或在路由器TTYD终端使用install-to-emmc.sh命令全新刷入emmc。
           更新固件：将固件放在/mnt/mmcblk2p4/目录下，在路由器TTYD终端输入openwrt-update-amlogic命令可直接更新。
-        
+ 
     - name: 删除发布的旧固件
       uses: dev-drprasad/delete-older-releases@master
       env:
