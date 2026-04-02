@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: 准备完成
+    - name: 检出代码
       uses: actions/checkout@main
 
     - name: 释放磁盘空间
@@ -38,7 +38,7 @@ jobs:
         docker-images: true
         swap-storage: true
 
-    - name: 初始化编译环境
+    - name: 搭建构建环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -56,7 +56,7 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 缓存构建动作
+    - name: 缓存构建
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
